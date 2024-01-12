@@ -1,17 +1,27 @@
+const Review = require("../models/review");
+
 async function addReview(authorId, bookId, rating, reviewText) {
-    throw new Error("Not implemented: addReview");
+    const review = await Review.create({author: authorId, book: bookId, rating, reviewText});
+    console.log("Review created: ", review.reviewText);
+    return review;
 }
 
 async function listReviewsForBook(bookId) {
-    throw new Error("Not implemented: listReviewsForBook");
+    const reviews = await Review.find({book: bookId});
+    console.log("Reviews: ", reviews.length);
+    return reviews;
 }
 
 async function listReviewsForAuthor(authorId) {
-    throw new Error("Not implemented: listReviewsForAuthor");
+    const reviews = await Review.find({author: authorId});
+    console.log("Reviews: ", reviews.length);
+    return reviews;
 }
 
 async function deleteReview(reviewId) {
-    throw new Error("Not implemented: deleteReview");
+    const review = await Review.findByIdAndDelete(reviewId);
+    console.log("Review deleted: ", review.ok);
+    return review;
 }
 
 module.exports = {
