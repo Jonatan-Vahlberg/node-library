@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
-const localDB =  (db = "db0") => `mongodb://localhost/${db}`;
-const atlasDB = (db = "db0") => `mongodb+srv://jonatanvahlberg:123123abcabcadmin@node30.hdzx1ml.mongodb.net/${db}?retryWrites=true&w=majority;`;
+const localDB =  process.env.MONGODB_URI || "mongodb://localhost:27017/library";
+const atlasDB = "mongodb+srv://vercel-admin-user:vB5bFkVSaZ8pk1KP@cluster0.cxnyj16.mongodb.net/library?retryWrites=true&w=majority"
 
-async function connectToDB(db = "db0") {
-    let url = atlasDB(db);
+async function connectToDB() {
+    let url = atlasDB
     if(process.env.NODE_ENV === 'development') {
-        url = localDB(db);
+        url = localDB
     }
     console.log("url: ", url, process.env.NODE_ENV);
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
