@@ -7,6 +7,10 @@ var bookSchema = new Schema({
     price: { type: Number, required: true }
 });
 
+bookSchema.methods.toString = function () {
+    return `${this.title} by ${this.author.name}`;
+};
+
 var Book = model('Book', bookSchema);
 
 module.exports = Book;
