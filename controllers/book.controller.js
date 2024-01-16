@@ -1,4 +1,4 @@
-const Book = require("../models/book");
+const Book = require("../models/book.model");
 
 async function addBook(req, res) {
     const {author, title, yearOfPublication, price} = req.body;
@@ -30,11 +30,16 @@ async function getBook(req, res) {
     const bookId = req.params.id;
     try {
         const book = await Book.findById(bookId).populate("author");
+        if(!book) {
+            return res.status(404).json({message: "Book not found"});
+        }
         console.log("Author: ", book.title);
         res.status(200).json(book);
     }
     catch (error) {
-        console.log(error.message);
+        if(error.kind === "ObjectId") {
+            return res.status(404).json({message: "Book not found"});
+        }
         res.status(500).json({message: error.message});
     }
 }

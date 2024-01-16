@@ -10,7 +10,6 @@ var authorSchema = new Schema({
 
 authorSchema.pre('save', function (next) {
     const author = this;
-    console.log("pre save pre", author.isNew, author.modifiedPaths());
     if (author.isModified('favouriteGenre') || author.isNew) {
         author.favouriteGenre = author.favouriteGenre.toLowerCase();
         author.favouriteGenre = BookGenre.getGenre(author.favouriteGenre);

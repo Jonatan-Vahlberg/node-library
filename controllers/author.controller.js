@@ -1,4 +1,4 @@
-const Author = require("../models/author");
+const Author = require("../models/author.model");
 
 async function addAuthor(req, res) {
     const {name, yearOfBirth, favouriteGenre} = req.body;
@@ -33,7 +33,9 @@ async function getAuthor(req, res) {
         res.status(200).json(author);
     }
     catch (error) {
-        console.log(error.message);
+        if(error.kind === "ObjectId") {
+            return res.status(404).json({message: "Author not found"});
+        }
         res.status(500).json({message: error.message});
     }
 }
@@ -51,10 +53,11 @@ async function updateAuthor(req, res) {
             console.log("Author updated: ", author.name);
             res.status(200).json(author);
         }
-        res.status(404).json({message: "Author not found"});
     }
     catch (error) {
-        console.log(error.message);
+        if(error.kind === "ObjectId") {
+            return res.status(404).json({message: "Author not found"});
+        }
         res.status(500).json({message: error.message});
     }
 }

@@ -1,4 +1,4 @@
-const Review = require("../models/review");
+const Review = require("../models/review.model");
 
 async function addReview(req, res) {
     const {author, book, rating, review} = req.body;
